@@ -27,6 +27,7 @@ while (True):
     print(">> Start a new game")
     # 如果is_training為True，它將使用 agent 裡的 step function 來玩遊戲。
     # 如果is_training為False，則使用 eval_step。
+
     trajectories, payoffs = env.run(is_training=False)
     
     # If the human does not take the final action, we need to
@@ -37,10 +38,16 @@ while (True):
         action_record = []
         state = []
         _action_list = []
-
+        
         for i in range(player_num):
+            # 第 i 位玩家的紀錄
             final_state.append(trajectories[i][-1][-2])
+            # print('final_state : ', trajectories[i][-1][-2])
+            # print('='*55)
+            # 第 i 位玩家目前手牌
             state.append(final_state[i]['raw_obs'])
+            # print('state : ', final_state[i]['raw_obs'])
+            # print('='*55)
 
         action_record.append(final_state[i]['action_record'])
         for i in range(1, len(action_record) + 1):
@@ -56,7 +63,7 @@ while (True):
     for i in range(player_num):
         print('===============   Player {} Hand   ==============='.format(i))
         print_card(state[i]['state'][0])
-
+    
     print('===============     Result     ===============')
     for i in range(player_num):
         if payoffs[i] == 1:

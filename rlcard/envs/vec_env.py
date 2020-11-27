@@ -71,6 +71,7 @@ class VecEnv(object):
             # TODO: Currently we naively feed one obs to the agent. This can be improved via batch
             commands = []
             actions = []
+            
             for i in range(active_num):
                 opt = 'raw_step' if self.agents[player_ids[i]].use_raw else 'step'
                 if not is_training:
