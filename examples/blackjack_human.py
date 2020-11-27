@@ -9,8 +9,14 @@ from rlcard.utils.utils import print_card
 
 # Make environment and enable human mode
 # Set 'record_action' to True because we need it to print results
+# 玩家人數
 player_num = 2
+
+# config 為配置環境的 dictionary 
+# 默認False。如為True，則中的字段action_record將state記錄歷史操作。這可以用於人為代理遊戲。
 env = rlcard.make('blackjack', config={'record_action': True, 'game_player_num': player_num})
+
+# env.action_num 該遊戲可操作的數量
 human_agent = HumanAgent(env.action_num)
 random_agent = RandomAgent(env.action_num)
 env.set_agents([human_agent, random_agent])
@@ -19,8 +25,10 @@ print(">> Blackjack human agent")
 
 while (True):
     print(">> Start a new game")
-
+    # 如果is_training為True，它將使用 agent 裡的 step function 來玩遊戲。
+    # 如果is_training為False，則使用 eval_step。
     trajectories, payoffs = env.run(is_training=False)
+    
     # If the human does not take the final action, we need to
     # print other players action
 
